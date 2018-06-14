@@ -13,7 +13,18 @@ Template.addComment.events({
     event.preventDefault();
     var commentVar = event.target.comment.value;
 
-    Meteor.call('converse', commentVar, function(error, result) {});
+    // Call
+    ChatLogs.insert({
+      commenter: 0,
+      text: commentVar,
+      createdAt: new Date()
+    });
+
+    Meteor.call('converse', commentVar, function(err, result) {
+      if (err) {
+        alert(err);
+      }
+    });
     
     event.target.comment.value = "";
   }
